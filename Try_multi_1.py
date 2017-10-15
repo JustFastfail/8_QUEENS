@@ -57,11 +57,9 @@ global j
 j = 0
 
 ##for i in range(n**n):
-def Initialization(i):
-    n = 8
+def Initialization(i=0, n=8):
     queens = list_base_change(i, n, n)
     queens_solution, Err = OneByOne( queens, n)
-
     if globals()["j"] >= n:  # Length of memorized solutions limited at n elements
         globals()["j"] = 0
     # if not(Err) and j == 0:
@@ -82,14 +80,20 @@ def Initialization(i):
         globals()["j"] += 1
         # print("Err = ",  Err)
 
-    return queens_solution
+        return queens_solution
 
-p = mp.Pool(1)
-Sol = p.map(Initialization, range(n**n))
-for r in Sol:
-    print(r)
-p.close()
-p.join()
+    else:
+        if i >= n**n: return
+        Initialization(i+1, n)
+
+# p = mp.Pool(4)
+# Sol = p.map(Initialization, range(n**n))
+# for r in Sol:
+#     print(r)
+# p.close()
+# p.join()
+
+Initialization(0)
 
 elapsed_time = time() - start_time
 print('\n Transcurridos %0.2f segundos.\n' % elapsed_time)
