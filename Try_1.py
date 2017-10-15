@@ -80,7 +80,7 @@ for i in range(n**n):
         #11 old_solutions.append( list(queens_solution) )
         old_solutions.pop(j)
         old_solutions.insert(j, list(queens_solution))
-        print("old solution    = ", old_solutions)
+        # print("old solution    = ", old_solutions)
         j += 1
         # print("Err = ",  Err)
 
