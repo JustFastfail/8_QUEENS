@@ -1,5 +1,4 @@
-import multiprocessing.dummy as mp
-import itertools
+import threading
 from list_base_change import list_base_change
 from time import time
 
@@ -48,52 +47,43 @@ def OneByOne( queens, n ):
             i += 1
     return queens, error
 
-
-n= 4
+n = 8
 start_time = time()
-global old_solutions
-old_solutions = [[] for x in range(n)]
-global j
 j = 0
+n_threads = 4
 
-##for i in range(n**n):
-def Initialization(i=0, n=8):
-    queens = list_base_change(i, n, n)
-    queens_solution, Err = OneByOne( queens, n)
-    if globals()["j"] >= n:  # Length of memorized solutions limited at n elements
-        globals()["j"] = 0
-    # if not(Err) and j == 0:
-    #     print("queens_solution = ", queens_solution)
-    #     #11 old_solutions.append(list(queens_solution))
-    #     old_solutions.pop(j)
-    #     old_solutions.insert(j, list(queens_solution))
-    #     print("old solution    = ", old_solutions)
-    #     j += 1
-    # else:
 
-    if not(Err) and all( queens_solution != r for r in globals()["old_solutions"] ):
-        print("queens_solution = ", queens_solution)
-        #11 old_solutions.append( list(queens_solution) )
-        globals()["old_solutions"].pop(j)
-        globals()["old_solutions"].insert(j, list(queens_solution))
-        # print("old solution    = ", old_solutions)
-        globals()["j"] += 1
-        # print("Err = ",  Err)
 
-        return queens_solution
+def Initialization(i0=0, n=8, n_threads = 4):
+    i = i0
+    j = 0
+    old_solutions = [[] for x in range(n)]
+    while i <= i0+(n**n)//n_threads:
+        queens = list_base_change(i, n, n)
+        queens_solution, Err = OneByOne( queens, n)
+        if j >= n:  # Length of memorized solutions limited at n elements
+            j = 0
 
-    else:
-        if i >= n**n: return
-        Initialization(i+1, n)
+        if not(Err) and all( queens_solution != r for r in old_solutions ):
+            print("queens_solution = ", queens_solution)
+            #11 old_solutions.append( list(queens_solution) )
+            old_solutions.pop(j)
+            old_solutions.insert(j, list(queens_solution))
+            # print("old solution    = ", old_solutions)
+            j += 1
+            # print("Err = ",  Err)
 
-# p = mp.Pool(4)
-# Sol = p.map(Initialization, range(n**n))
-# for r in Sol:
-#     print(r)
-# p.close()
-# p.join()
+            return queens_solution
+        i+=1
 
-Initialization(0)
+
+threads = []
+for i in range(n_threads):
+    t = threading.Thread(target=Initialization, args=(i*((n**n)//n_threads), n, n_threads))
+    threads.append(t)
+    t.start()
+
+
 
 elapsed_time = time() - start_time
 print('\n Transcurridos %0.2f segundos.\n' % elapsed_time)
