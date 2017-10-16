@@ -73,9 +73,10 @@ def Initialization(i0=0, n=8, n_threads = 4):
             j += 1
             # print("Err = ",  Err)
 
-            return queens_solution
+
         i+=1
 
+    return
 
 threads = []
 for i in range(n_threads):
@@ -83,7 +84,7 @@ for i in range(n_threads):
     threads.append(t)
     t.start()
 
-
+[r.join() for r in threads]
 
 elapsed_time = time() - start_time
 print('\n Transcurridos %0.2f segundos.\n' % elapsed_time)
