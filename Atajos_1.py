@@ -89,6 +89,7 @@ for i in range((n**n)//2+(n**n)%2):
 elapsed_time = time() - start_time
 print('\n Transcurridos %0.2f segundos.\n' % elapsed_time)
 
+
 csvfile = "./queens_solution_"+str(n)+"_"+"time_"+str(int(elapsed_time))+".csv"
 with open(csvfile, "w") as output:
     writer = csv.writer(output, lineterminator='\n')
