@@ -87,5 +87,3 @@ for i in range(n**n):
 
 elapsed_time = time() - start_time
 print('\n Transcurridos %0.2f segundos.\n' % elapsed_time)
-
-
