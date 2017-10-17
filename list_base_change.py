@@ -14,7 +14,6 @@ def list_base_change(decimal, base, nelementos):
     binario = [0] * (nelementos - len(binario)) + binario
     return binario
 
-
 # n = 8
 # for i in range(n**n):
 #     print( list_base_change(i, n, n) )
