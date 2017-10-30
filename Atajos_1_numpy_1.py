@@ -1,6 +1,7 @@
 from list_base_change import list_base_change
 from time import time
 import csv
+import numba
 
 
 # Checkings: ---------------------------------------------------
@@ -90,7 +91,7 @@ elapsed_time = time() - start_time
 print('\n Transcurridos %0.2f segundos.\n' % elapsed_time)
 
 
-csvfile = "./queens_solution_"+str(n)+"_"+"time_"+str(int(elapsed_time))+".csv"
+csvfile = "./queens_solution_"+str(n)+"_"+"time_"+str(int(elapsed_time))+"numba.csv"
 with open(csvfile, "w") as output:
     writer = csv.writer(output, lineterminator='\n')
     writer.writerows(queens_solutions)

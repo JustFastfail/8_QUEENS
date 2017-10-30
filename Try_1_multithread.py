@@ -47,7 +47,7 @@ def OneByOne( queens, n ):
             i += 1
     return queens, error
 
-n = 8
+n = 5
 start_time = time()
 j = 0
 n_threads = 4
@@ -84,7 +84,8 @@ for i in range(n_threads):
     threads.append(t)
     t.start()
 
-[r.join() for r in threads]
+for r in threads:
+    r.join()
 
 elapsed_time = time() - start_time
 print('\n Transcurridos %0.2f segundos.\n' % elapsed_time)

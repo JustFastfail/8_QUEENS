@@ -52,7 +52,7 @@ def OneByOne( queens, n ):
     return queens, error
 
 
-n = 7
+n = 5
 # queens = [0] * n
 
 start_time = time()
