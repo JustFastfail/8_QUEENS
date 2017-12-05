@@ -9,6 +9,7 @@ import csv
 #   3. Diagonal
 #---------------------------------------------------------------
 
+# Second shortcut is based on elimintate not possible solutions for the following iterations (following rows)
 
 def row_check(queens,column):  # NO-repeated value in the list
         if column == 0:
@@ -61,7 +62,7 @@ for i in range((n**n)//2+(n**n)%2):
     # Initialization:
     queens = list_base_change(i, n, n)
     if len(queens) == len(set(queens)): # row checking previous
-        queens_solution_member, Err = OneByOne( queens, n)
+        queens_solution_member, Err = OneByOne( queens, n, avoided)
 
         if not(Err) and all( queens_solution_member != r for r in old_solutions ):
             print("queens_solution = ", queens_solution_member)
@@ -93,7 +94,7 @@ print('\n Transcurridos %0.2f segundos.\n' % elapsed_time)
 print( cc, ' solutions.' )
 
 
-#csvfile = "./queens_solution_"+str(n)+"_"+"time_"+str(int(elapsed_time))+".csv"
-#with open(csvfile, "w") as output:
-#    writer = csv.writer(output, lineterminator='\n')
-#    writer.writerows(queens_solutions)
+csvfile = "./queens_solution_"+str(n)+"_"+"time_"+str(int(elapsed_time))+".csv"
+with open(csvfile, "w") as output:
+    writer = csv.writer(output, lineterminator='\n')
+    writer.writerows(queens_solutions)

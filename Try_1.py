@@ -52,12 +52,13 @@ def OneByOne( queens, n ):
     return queens, error
 
 
-n = 5
+n = 8
 # queens = [0] * n
 
 start_time = time()
 old_solutions = [[] for x in range(n)]
 j = 0
+cc = 0
 
 for i in range(n**n):
     # Initialization:
@@ -82,10 +83,12 @@ for i in range(n**n):
         old_solutions.insert(j, list(queens_solution))
         # print("old solution    = ", old_solutions)
         j += 1
+        cc += 1
         # print("Err = ",  Err)
 
 
 elapsed_time = time() - start_time
 print('\n Transcurridos %0.2f segundos.\n' % elapsed_time)
+print(cc, ' solutions.')
 
 
