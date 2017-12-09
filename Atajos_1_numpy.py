@@ -1,5 +1,6 @@
-from list_base_change import list_base_change
+from list_base_change import list_base_change_np
 from time import time
+import numpy as np
 import csv
 
 
@@ -9,7 +10,6 @@ import csv
 #   3. Diagonal
 #---------------------------------------------------------------
 
-# Second shortcut is based on elimintate not possible solutions for the following iterations (following rows)
 
 def row_check(queens,column):  # NO-repeated value in the list
         if column == 0:
@@ -38,7 +38,7 @@ def OneByOne( queens, n ):
     while i < n:
         #print("i= ", i)
         #  if row_check(queens, i) or diagonal_check(queens, i):
-        if not( len(queens) == len(set(queens)) ) or diagonal_check(queens, i):
+        if not( queens.size == queens.unique.size ) or diagonal_check(queens, i):
             queens[i] += 1
             #print( "Queen = ", queens[i])
             if queens[i] >= n:
@@ -51,22 +51,22 @@ def OneByOne( queens, n ):
     return queens, error
 
 
-n = 8
+n = 4
 start_time = time()
 old_solutions = [[] for x in range(n)]
-queens_solutions = [[]]
+queens_solutions = np.array([])
 j = 0; cc = 0
 
 
 for i in range((n**n)//2+(n**n)%2):
     # Initialization:
-    queens = list_base_change(i, n, n)
+    queens = list_base_change_np(i, n, n)
     if len(queens) == len(set(queens)): # row checking previous
-        queens_solution_member, Err = OneByOne( queens, n )
+        queens_solution_member, Err = OneByOne( queens, n)
 
         if not(Err) and all( queens_solution_member != r for r in old_solutions ):
             print("queens_solution = ", queens_solution_member)
-            queens_solutions.append( queens_solution_member )
+            queens_solutions.concatenate((queens_solutions, queens_solution_member) )
             #11 old_solutions.append( list(queens_solution) )
             old_solutions.pop(j)
             old_solutions.insert(j, list(queens_solution_member))
@@ -94,7 +94,7 @@ print('\n Transcurridos %0.2f segundos.\n' % elapsed_time)
 print( cc, ' solutions.' )
 
 
-csvfile = "./queens_solution_"+str(n)+"_"+"time_"+str(int(elapsed_time))+".csv"
-with open(csvfile, "w") as output:
-    writer = csv.writer(output, lineterminator='\n')
-    writer.writerows(queens_solutions)
+#csvfile = "./queens_solution_"+str(n)+"_"+"time_"+str(int(elapsed_time))+".csv"
+#with open(csvfile, "w") as output:
+#    writer = csv.writer(output, lineterminator='\n')
+#    writer.writerows(queens_solutions)

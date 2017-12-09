@@ -50,7 +50,7 @@ def OneByOne( queens, n ):
     return queens, error
 
 
-n = 8
+n = 4
 start_time = time()
 old_solutions = [[] for x in range(n)]
 queens_solutions = [[]]
