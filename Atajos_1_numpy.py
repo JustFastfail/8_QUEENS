@@ -38,7 +38,7 @@ def OneByOne( queens, n ):
     while i < n:
         #print("i= ", i)
         #  if row_check(queens, i) or diagonal_check(queens, i):
-        if not( queens.size == queens.unique.size ) or diagonal_check(queens, i):
+        if not( queens.size == len(set(queens.tolist())) ) or diagonal_check(queens, i):
             queens[i] += 1
             #print( "Queen = ", queens[i])
             if queens[i] >= n:
@@ -66,7 +66,7 @@ for i in range((n**n)//2+(n**n)%2):
 
         if not(Err) and all( queens_solution_member != r for r in old_solutions ):
             print("queens_solution = ", queens_solution_member)
-            queens_solutions.concatenate((queens_solutions, queens_solution_member) )
+            queens_solutions = np.concatenate((queens_solutions, queens_solution_member) )
             #11 old_solutions.append( list(queens_solution) )
             old_solutions.pop(j)
             old_solutions.insert(j, list(queens_solution_member))
@@ -78,7 +78,7 @@ for i in range((n**n)//2+(n**n)%2):
 
             queens_solution_member = [(n-1) - r for r in queens_solution_member]  # Sym solution
             print("queens_solution = ", queens_solution_member)
-            queens_solutions.append(queens_solution_member)
+            queens_solutions = np.concatenate((queens_solutions, queens_solution_member))
             #11 old_solutions.append( list(queens_solution) )
             old_solutions.pop(j)
             old_solutions.insert(j, list(queens_solution_member))
