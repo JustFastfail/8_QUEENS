@@ -38,7 +38,7 @@ def OneByOne( queens, n ):
     while i < n:
         #print("i= ", i)
         #  if row_check(queens, i) or diagonal_check(queens, i):
-        if not( queens.size == len(set(queens.tolist())) ) or diagonal_check(queens, i):
+        if not( queens.size == np.unique(queens).size ) or diagonal_check(queens, i):
             queens[i] += 1
             #print( "Queen = ", queens[i])
             if queens[i] >= n:
@@ -51,7 +51,7 @@ def OneByOne( queens, n ):
     return queens, error
 
 
-n = 8
+n = 4
 start_time = time()
 old_solutions = [[] for x in range(n)]
 queens_solutions = np.array([])
@@ -76,7 +76,7 @@ for i in range((n**n)//2+(n**n)%2):
             if j >= n:  # Length of memorized solutions limited at n elements
                 j = 0
 
-            queens_solution_member = [(n-1) - r for r in queens_solution_member]  # Sym solution
+            queens_solution_member = np.array([(n-1) - r for r in queens_solution_member])  # Sym solution
             print("queens_solution = ", queens_solution_member)
             queens_solutions = np.concatenate((queens_solutions, queens_solution_member))
             #11 old_solutions.append( list(queens_solution) )
