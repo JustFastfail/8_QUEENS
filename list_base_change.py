@@ -16,19 +16,15 @@ def list_base_change(decimal, base, nelementos):
     binario = [0] * (nelementos - len(binario)) + binario
     return binario
 
+
 def list_base_change_np(decimal, base, nelementos):
 
     binario = np.array([])
-    # base = 4
 
     while decimal // base != 0:
         binario = np.concatenate(([decimal % base], binario))
         decimal = decimal // base
-    binario = np.concatenate(([decimal], binario))
-    binario_aux = np.array([])
-    for i in range(nelementos - binario.size):
-        binario_aux = np.concatenate(([0],[0]))
-    binario =  np.concatenate((binario_aux, binario))
+    binario = np.concatenate((np.zeros(nelementos - binario.size), np.concatenate(([decimal], binario))  ))
     return binario
 
 #n = 4

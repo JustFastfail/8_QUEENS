@@ -51,9 +51,9 @@ def OneByOne( queens, n ):
     return queens, error
 
 
-n = 4
+n = 8
 start_time = time()
-old_solutions = [[] for x in range(n)]
+old_solutions = np.zeros((n,n))
 queens_solutions = np.array([])
 j = 0; cc = 0
 
@@ -61,16 +61,20 @@ j = 0; cc = 0
 for i in range((n**n)//2+(n**n)%2):
     # Initialization:
     queens = list_base_change_np(i, n, n)
-    if len(queens) == len(set(queens)): # row checking previous
+    if queens.size == np.unique(queens).size : # row checking previous
+        #11 print('posible solucion')
+        #11 print(queens)
         queens_solution_member, Err = OneByOne( queens, n)
+        #11 print('q', queens_solution_member, Err)
+        #11 print('a', old_solutions[:,:] )
 
-        if not(Err) and all( queens_solution_member != r for r in old_solutions ):
+        if not(Err) and not(all(  [np.array_equal(queens_solution_member, old_solutions[r,:]) for r in range(n)] )) :
             print("queens_solution = ", queens_solution_member)
             queens_solutions = np.concatenate((queens_solutions, queens_solution_member) )
             #11 old_solutions.append( list(queens_solution) )
-            old_solutions.pop(j)
-            old_solutions.insert(j, list(queens_solution_member))
-            # print("old solution    = ", old_solutions)
+            old_solutions[j,:] = queens_solution_member
+            #11 print("old solution    = ")
+            #11 print( old_solutions)
             j += 1
             cc += 1
             if j >= n:  # Length of memorized solutions limited at n elements
@@ -80,9 +84,9 @@ for i in range((n**n)//2+(n**n)%2):
             print("queens_solution = ", queens_solution_member)
             queens_solutions = np.concatenate((queens_solutions, queens_solution_member))
             #11 old_solutions.append( list(queens_solution) )
-            old_solutions.pop(j)
-            old_solutions.insert(j, list(queens_solution_member))
-            # print("old solution    = ", old_solutions)
+            old_solutions[j, :] = queens_solution_member
+            #11 print("old solution    = ")
+            #11 print( old_solutions )
             j += 1
             cc += 1
             if j >= n:  # Length of memorized solutions limited at n elements
